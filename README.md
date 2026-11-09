@@ -224,7 +224,27 @@ These are the real results from my session against the running app.
 | Made a booking and then refreshed the Bookings page | The booking disappeared. The Bookings page was blank. | Look at the empty Bookings page. |
 | Opened Bookings with no bookings made | The page was completely blank, with no "You have no bookings" message. | End of session. Write down ideas for later. |
 
-> **Note about the session:** These steps were run in a real Chromium browser against the running app, but they were done with an automated browser script (with help from an AI assistant, see the AI Transparency section), so they are quicker than a real hands-on session. **I still need to do a full 10–15 minute hands-on exploratory session by myself in the browser** to meet the time requirement in Step 2 and add anything new I notice. The scripts are saved in [`test-evidence/`](test-evidence/).
+> **Note about the session:** The table above was first run in Chromium with an automated browser script (with help from an AI assistant, see the AI Transparency section). The scripts are saved in [`test-evidence/`](test-evidence/). I then tested the app by hand in Google Chrome, as shown below.
+
+### Hands-On Manual Session (Google Chrome)
+
+I ran the app on my own computer (`localhost:5173`) and tested booking creation by hand.
+
+| What I Tried | What Happened | What I Decided to Try Next |
+| ------------ | ------------- | -------------------------- |
+| Opened the Home page | All rentals loaded as cards with a name, location, photo, price per night, and More/Save buttons. | Go to the booking form. |
+| Clicked **Add Booking** | The "Book a Stay" form showed **Cozy Cabin** in the dropdown, an empty date (`mm/dd/yyyy`), and 1 guest. | Book without changing the dropdown. |
+| Left the dropdown on Cozy Cabin, picked 11/19/2026, entered 6 guests, and clicked **Confirm Booking** | On the Bookings page it showed `Rental: Date: 2026-11-19 Guests: 6`. **The rental name was missing**, the same bug the scripted test found. | Pick a rental on purpose to compare. |
+| Picked **Mountain Retreat**, 12/02/2026, 10 guests, and confirmed | The Bookings page showed `Rental: Mountain Retreat Date: 2026-12-02 Guests: 10`. This booking was saved correctly. 10 guests was accepted with no limit. | Compare the two bookings on the Bookings page. |
+| Looked at the Bookings page | Both bookings appear as plain lines of text. There is no price, location, booking number, or way to edit or cancel. | Save ideas for a future session. |
+
+**Screenshots from my manual session:**
+
+| Home page | Add Booking form | Bookings list |
+| --------- | ---------------- | ------------- |
+| ![Home page with rental cards](screenshots/01-home-page.webp) | ![Add Booking form showing Cozy Cabin by default](screenshots/02-add-booking-form.png) | ![Bookings list with one blank rental name](screenshots/03-bookings-list.png) |
+
+The manual session confirmed the biggest bug: if the user keeps the default rental (Cozy Cabin), the booking is saved **without a rental name**. It only saves correctly when the user picks a rental from the dropdown.
 
 ### Ideas for Future Testing Sessions
 
@@ -236,6 +256,7 @@ These are outside my charter, so I am saving them for later:
 - Test the **More** and **Save** buttons on the rental cards (they did not seem to do anything).
 - Test in **other browsers** (Firefox, Safari), since date and number checks come from the browser itself.
 - Test whether the form should have a **check-out date**, a **price total**, and a **max guests per rental**.
+- Test whether the Bookings page should show more details (price, location) and let users **edit or cancel** a booking.
 
 ---
 
@@ -293,7 +314,8 @@ These are written from the point of view of a traveler who wants to book a stay.
 
 ## Remaining Manual Testing
 
-- [ ] Do a full **10–15 minute hands-on exploratory session** by myself in a browser (Step 2) and add any new notes to the table.
+- [x] Do a hands-on exploratory session by myself in a browser (Step 2). Done in Google Chrome, see "Hands-On Manual Session" and the screenshots.
+- [ ] Make sure my hands-on session lasted the full **10–15 minutes** and add any extra notes to the manual session table.
 - [ ] Optionally repeat a few checks in a second browser (for example Firefox), because the date and number checks come from the browser.
 
 ---
@@ -305,8 +327,9 @@ These are written from the point of view of a traveler who wants to book a stay.
 | `README.md` | Original assignment instructions (unchanged, at the top) plus my completed work (this section) |
 | `airbnb-clone-ts/` | The original North Vacation Booking starter app (code not changed) |
 | `test-evidence/explore.js`, `test-evidence/followup.js` | The Playwright scripts used to run the exploratory, checklist, and acceptance tests in Chromium. They need the API on port 3001 and the app on port 5173 running, plus Playwright installed (`node test-evidence/explore.js`). |
+| `screenshots/` | Screenshots from my hands-on session in Google Chrome (Home page, Add Booking form, Bookings list) |
 | `.gitignore` | Keeps `node_modules`, `dist`, and other generated files out of Git |
 
 ## AI Transparency Statement (My Work)
 
-I used an AI assistant (Claude) to help with this assignment. It helped set up and run the app, write and run the automated browser scripts used for testing, and draft and format the documentation in this README. All of the results in the tables come from actually running the app; nothing was made up. Tests that could not be done are marked **Unable to Test**. I reviewed the results, and I still need to complete the hands-on exploratory session listed above myself.
+I used an AI assistant (Claude) to help with this assignment. It helped set up and run the app, write and run the automated browser scripts used for testing, and draft and format the documentation in this README. All of the results in the tables come from actually running the app; nothing was made up. Tests that could not be done are marked **Unable to Test**. I reviewed the results, and I also tested the app by hand in Google Chrome (see the screenshots).
