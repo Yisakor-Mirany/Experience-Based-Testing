@@ -1,0 +1,5 @@
+node_modules/
+dist/
+*.tsbuildinfo
+*Zone.Identifier
+.DS_Store
