@@ -240,9 +240,17 @@ I ran the app on my own computer (`localhost:5173`) and tested booking creation 
 
 **Screenshots from my manual session:**
 
-| Home page | Add Booking form | Bookings list |
-| --------- | ---------------- | ------------- |
-| ![Home page with rental cards](screenshots/01-home-page.webp) | ![Add Booking form showing Cozy Cabin by default](screenshots/02-add-booking-form.png) | ![Bookings list with one blank rental name](screenshots/03-bookings-list.png) |
+**1. Home page:** all rentals loaded from the API.
+
+![Home page with rental cards](screenshots/01-home-page.webp)
+
+**2. Add Booking form:** the dropdown shows Cozy Cabin by default, the date is empty, and guests is 1.
+
+![Add Booking form showing Cozy Cabin by default](screenshots/02-add-booking-form.png)
+
+**3. Bookings list:** the first booking is missing its rental name (`Rental: Date: 2026-11-19 Guests: 6`), while the Mountain Retreat booking saved correctly.
+
+![Bookings list with one blank rental name](screenshots/03-bookings-list.png)
 
 The manual session confirmed the biggest bug: if the user keeps the default rental (Cozy Cabin), the booking is saved **without a rental name**. It only saves correctly when the user picks a rental from the dropdown.
 
